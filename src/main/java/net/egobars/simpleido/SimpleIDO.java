@@ -21,7 +21,12 @@ public class SimpleIDO implements ModInitializer {
                 BlockState state = world.getBlockState(pos);
                 if (state.getBlock() == Blocks.IRON_DOOR) {
                     DoorBlock doorBlock = (DoorBlock) state.getBlock();
-                    doorBlock.setOpen(player, world, state, pos, !doorBlock.isOpen(state));
+                    state = state.cycle(Properties.OPEN);
+                    world.setBlockState(pos, state, 10);
+                    world.syncWorldEvent(player, state.get(Properties.OPEN) ? 1005 : 1011, pos, 0);
+                    world.emitGameEvent(player, doorBlock.isOpen(state) ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
+                    player.handSwinging = true;
+                    return ActionResult.success(world.isClient);
                 } else if (state.getBlock() == Blocks.IRON_TRAPDOOR) {
                     if (!world.isClient()) {
                         state = state.cycle(Properties.OPEN);
@@ -35,6 +40,8 @@ public class SimpleIDO implements ModInitializer {
                         else world.syncWorldEvent(player, WorldEvents.IRON_TRAPDOOR_CLOSES, pos, 0);
                         world.emitGameEvent(player, is_open ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
                     }
+                    player.handSwinging = true;
+                    return ActionResult.success(world.isClient);
                 }
             }
             return ActionResult.PASS;
