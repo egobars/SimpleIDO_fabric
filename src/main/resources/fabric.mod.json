@@ -1,38 +1,40 @@
 {
-  "schemaVersion": 1,
-  "id": "simpleido",
-  "version": "${version}",
-
-  "name": "Simple Iron Doors Open",
-  "description": "Open iron doors and trapdoors easily!",
-  "authors": [
-    "Egobars"
-  ],
-  "contact": {
-    "homepage": "https://github.com/egobars/SimpleIDO_1.18_fabric",
-    "sources": "https://github.com/egobars/SimpleIDO_1.18_fabric"
-  },
-
-  "license": "MIT License",
-  "icon": "assets/simpleido/icon.png",
-
-  "environment": "*",
-  "entrypoints": {
-    "main": [
-      "net.egobars.simpleido.SimpleIDO"
-    ]
-  },
-  "mixins": [
-
-  ],
-
-  "depends": {
-    "fabricloader": ">=0.11.3",
-    "fabric": "*",
-    "minecraft": "1.18.x",
-    "java": ">=17"
-  },
-  "suggests": {
-    "another-mod": "*"
-  }
+	"schemaVersion": 1,
+	"id": "simpleido",
+	"version": "1.4.0",
+	"name": "Simple Iron Doors Open",
+	"description": "Open iron doors and trapdoors easily!",
+	"authors": [
+		"Egobars"
+	],
+	"contact": {
+		"homepage": "https://github.com/egobars/SimpleIDO",
+		"sources": "https://github.com/egobars/SimpleIDO"
+	  },
+	"license": "MIT",
+	"icon": "assets/simpleido/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.egobars.simpleido.SimpleIDO"
+		],
+		"client": [
+			"net.egobars.simpleido.SimpleIDOClient"
+		]
+	},
+	"mixins": [
+		"simpleido.mixins.json",
+		{
+			"config": "simpleido.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.14.22",
+		"minecraft": "~1.20.2",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+	}
 }
